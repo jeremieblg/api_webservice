@@ -1,0 +1,317 @@
+openapi: 3.0.0
+info:
+  title: "My API"
+  version: 1.0.0
+paths:
+  /api/api/characters:
+    get:
+      tags:
+        - characters
+      summary: "Get all characters"
+      operationId: getCharacters
+      parameters:
+        - name: s
+          in: query
+          description: Keywords
+          required: false
+        - name: page
+          in: query
+          description: "number of the requested page"
+          required: false
+      responses:
+        "200":
+          description: "There are characters"
+        "204":
+          description: "No character found"
+    post:
+      tags:
+        - characters
+      summary: "Create a character"
+      operationId: createCharacter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                hero_name:
+                  type: string
+                age:
+                  type: string
+              type: object
+              example:
+                first_name: Bruce
+                last_name: Banner
+                hero_name: Hulk
+                age: "38"
+      responses:
+        "201":
+          description: "Create OK"
+        "503":
+          description: "Create KO"
+        "400":
+          description: "Bad request"
+  "/api/api/characters/{characterId}":
+    get:
+      tags:
+        - characters
+      summary: "Find character by ID"
+      description: "Returns a single character"
+      operationId: getCharacter
+      parameters:
+        - name: characterId
+          in: path
+          description: "Character id"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid parameter"
+        "404":
+          description: "Character not found"
+    put:
+      tags:
+        - characters
+      summary: "Update a character"
+      operationId: updateCharacter
+      parameters:
+        - name: characterId
+          in: path
+          description: "Character id to update"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                hero_name:
+                  type: string
+                age:
+                  type: string
+              type: object
+              example:
+                first_name: Bruce
+                last_name: Banner
+                hero_name: Hulk
+                age: "38"
+      responses:
+        "200":
+          description: "Update OK"
+        "400":
+          description: "Invalid parameter"
+        "404":
+          description: "Character not found"
+        "503":
+          description: "Update KO"
+    delete:
+      tags:
+        - characters
+      summary: "Delete a character"
+      operationId: deleteCharacter
+      parameters:
+        - name: characterId
+          in: path
+          description: "Character id to delete"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: "Delete OK"
+        "400":
+          description: "Invalid parameter"
+        "404":
+          description: "Character not found"
+        "503":
+          description: "Delete KO"
+  "/api/api/characters/{characterId}/powers":
+    post:
+      tags:
+        - characters
+      summary: "Create a power for one character"
+      operationId: createPowerForCharacter
+      parameters:
+        - name: characterId
+          in: path
+          description: "character id to add power"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                power_name:
+                  type: string
+              type: object
+              example:
+                power_name: vitesse
+      responses:
+        "201":
+          description: "Create OK"
+        "503":
+          description: "Create KO"
+        "400":
+          description: "Bad request"
+  "/api/api/characters/{characterId}/powers/{powerId}":
+    delete:
+      tags:
+        - characters
+      summary: "Delete a power for one character"
+      operationId: deletePowerForCharacter
+      parameters:
+        - name: characterId
+          in: path
+          description: "character id"
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: powerId
+          in: path
+          description: "Power id"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "201":
+          description: "Delete OK"
+        "503":
+          description: "Delete KO"
+        "400":
+          description: "Bad request"
+  /api/api/powers:
+    get:
+      tags:
+        - powers
+      summary: "Get all powers"
+      operationId: getPowers
+      responses:
+        "200":
+          description: "There are powers"
+        "204":
+          description: "No power found"
+    post:
+      tags:
+        - powers
+      summary: "Create a powers"
+      operationId: createPower
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                character_id:
+                  type: string
+                power_name:
+                  type: string
+              type: object
+              example:
+                character_id: "2"
+                power_name: Force
+      responses:
+        "201":
+          description: "Create OK"
+        "503":
+          description: "Create KO"
+        "400":
+          description: "Bad request"
+  "/api/api/powers/{power_id}":
+    get:
+      tags:
+        - powers
+      summary: "Get one power"
+      operationId: getPower
+      parameters:
+        - name: power_id
+          in: path
+          description: power_id
+          required: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: "There are powers"
+        "204":
+          description: "No power found"
+    put:
+      tags:
+        - powers
+      summary: "Create a powers"
+      operationId: updatePower
+      parameters:
+        - name: power_id
+          in: path
+          description: "Power id to update"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                character_id:
+                  type: string
+                power_name:
+                  type: string
+              type: object
+              example:
+                character_id: "2"
+                power_name: Force
+      responses:
+        "200":
+          description: "Update OK"
+        "400":
+          description: "Invalid parameter"
+        "404":
+          description: "Power not found"
+        "503":
+          description: "Update KO"
+    delete:
+      tags:
+        - powers
+      summary: "Delete a power"
+      operationId: deletePower
+      parameters:
+        - name: power_id
+          in: path
+          description: "Power id to delete"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: "Delete OK"
+        "400":
+          description: "Invalid parameter"
+        "404":
+          description: "Character not found"
+        "503":
+          description: "Delete KO"

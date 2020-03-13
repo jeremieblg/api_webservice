@@ -1,0 +1,13 @@
+{
+    "name": "utilisateur/api_webservice",
+    "authors": [
+        {
+            "name": "jeremieblg",
+            "email": "bellanger.jeremie@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "zircote/swagger-php": "^3.0"
+    }
+}
